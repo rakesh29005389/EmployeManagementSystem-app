@@ -1,0 +1,13 @@
+{
+  "name": "employee-management-system",
+  "version": "1.0.0",
+  "description": "Employee Management System with Node.js/Express backend and React frontend",
+  "private": true,
+  "scripts": {
+    "start:backend": "cd backend && node server.js",
+    "start:frontend": "cd frontend && npm start",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "build:frontend": "cd frontend && npm run build",
+    "test:frontend": "cd frontend && CI=true npm test"
+  }
+}
