@@ -92,3 +92,7 @@ npm start
 cd frontend && CI=true npm test
 ```
 
+## Documentation
+
+- [Technical Design Document](docs/design.md) – System architecture, API design, data model, security considerations, and deployment strategy.
+
