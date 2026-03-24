@@ -8,6 +8,7 @@ const EMPTY_FORM = {
   department: '',
   role: '',
   hire_date: '',
+  document_url: '',
 };
 
 export default function EmployeeForm({ initial, onSubmit, onCancel, error }) {
@@ -94,6 +95,18 @@ export default function EmployeeForm({ initial, onSubmit, onCancel, error }) {
           required
           value={form.hire_date}
           onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="document_url">Document URL (PDF)</label>
+        <input
+          id="document_url"
+          name="document_url"
+          type="url"
+          value={form.document_url}
+          onChange={handleChange}
+          placeholder="https://example.com/contract.pdf"
         />
       </div>
 
