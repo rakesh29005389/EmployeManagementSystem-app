@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function EmployeeTable({ employees, onEdit, onDelete }) {
+export default function EmployeeTable({ employees, onEdit, onDelete, onViewDocument }) {
   if (employees.length === 0) {
     return <p className="empty-state">No employees found.</p>;
   }
@@ -43,6 +43,15 @@ export default function EmployeeTable({ employees, onEdit, onDelete }) {
                 >
                   Delete
                 </button>
+                {emp.document_url && (
+                  <button
+                    className="btn btn-sm btn-document"
+                    onClick={() => onViewDocument(emp)}
+                    aria-label={`View document for ${emp.name}`}
+                  >
+                    View Doc
+                  </button>
+                )}
               </td>
             </tr>
           ))}

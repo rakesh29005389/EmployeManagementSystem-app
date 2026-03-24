@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import EmployeeTable from './components/EmployeeTable';
 import EmployeeForm from './components/EmployeeForm';
+import PdfViewer from './components/PdfViewer';
 import {
   getEmployees,
   createEmployee,
@@ -22,6 +23,9 @@ function App() {
   const [editingEmployee, setEditingEmployee] = React.useState(null);
 
   const [filterDept, setFilterDept] = React.useState('');
+
+  // PDF viewer modal state
+  const [viewingDocument, setViewingDocument] = React.useState(null);
 
   const loadEmployees = React.useCallback(async (dept) => {
     setLoading(true);
@@ -86,6 +90,14 @@ function App() {
     setFormError('');
   }
 
+  function handleViewDocument(emp) {
+    setViewingDocument(emp);
+  }
+
+  function handleCloseDocument() {
+    setViewingDocument(null);
+  }
+
   return (
     <div className="app">
       <header className="app-header">
@@ -118,6 +130,7 @@ function App() {
                 employees={employees}
                 onEdit={handleEditClick}
                 onDelete={handleDeleteClick}
+                onViewDocument={handleViewDocument}
               />
             )}
           </>
@@ -133,6 +146,25 @@ function App() {
           </div>
         )}
       </main>
+
+      {/* PDF document viewer modal */}
+      {viewingDocument && (
+        <div
+          className="pdf-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Document for ${viewingDocument.name}`}
+        >
+          <div className="pdf-modal">
+            <PdfViewer
+              src={viewingDocument.document_url}
+              title={`${viewingDocument.name} — Document`}
+              height="70vh"
+              onClose={handleCloseDocument}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

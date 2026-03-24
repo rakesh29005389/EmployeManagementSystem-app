@@ -12,8 +12,16 @@ db.exec(`
     email TEXT NOT NULL UNIQUE,
     department TEXT NOT NULL,
     role TEXT NOT NULL,
-    hire_date TEXT NOT NULL
+    hire_date TEXT NOT NULL,
+    document_url TEXT
   )
 `);
+
+// Add document_url to existing databases that pre-date this column.
+const existingColumns = db.prepare('PRAGMA table_info(employees)').all();
+const hasDocumentUrl = existingColumns.some((col) => col.name === 'document_url');
+if (!hasDocumentUrl) {
+  db.exec('ALTER TABLE employees ADD COLUMN document_url TEXT');
+}
 
 module.exports = db;

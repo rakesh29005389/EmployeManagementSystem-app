@@ -27,14 +27,14 @@ router.get('/:id', (req, res) => {
 
 // POST /api/employees - create a new employee
 router.post('/', (req, res) => {
-  const { name, email, department, role, hire_date } = req.body;
+  const { name, email, department, role, hire_date, document_url } = req.body;
   if (!name || !email || !department || !role || !hire_date) {
     return res.status(400).json({ error: 'All fields are required: name, email, department, role, hire_date' });
   }
   try {
     const result = db.prepare(
-      'INSERT INTO employees (name, email, department, role, hire_date) VALUES (?, ?, ?, ?, ?)'
-    ).run(name, email, department, role, hire_date);
+      'INSERT INTO employees (name, email, department, role, hire_date, document_url) VALUES (?, ?, ?, ?, ?, ?)'
+    ).run(name, email, department, role, hire_date, document_url || null);
     const employee = db.prepare('SELECT * FROM employees WHERE id = ?').get(result.lastInsertRowid);
     res.status(201).json(employee);
   } catch (err) {
@@ -51,14 +51,14 @@ router.put('/:id', (req, res) => {
   if (!existing) {
     return res.status(404).json({ error: 'Employee not found' });
   }
-  const { name, email, department, role, hire_date } = req.body;
+  const { name, email, department, role, hire_date, document_url } = req.body;
   if (!name || !email || !department || !role || !hire_date) {
     return res.status(400).json({ error: 'All fields are required: name, email, department, role, hire_date' });
   }
   try {
     db.prepare(
-      'UPDATE employees SET name = ?, email = ?, department = ?, role = ?, hire_date = ? WHERE id = ?'
-    ).run(name, email, department, role, hire_date, req.params.id);
+      'UPDATE employees SET name = ?, email = ?, department = ?, role = ?, hire_date = ?, document_url = ? WHERE id = ?'
+    ).run(name, email, department, role, hire_date, document_url || null, req.params.id);
     const employee = db.prepare('SELECT * FROM employees WHERE id = ?').get(req.params.id);
     res.json(employee);
   } catch (err) {
