@@ -245,6 +245,13 @@ body {
   color: #c5221f;
 }
 
+/* Download bar (above the employee table) */
+.download-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
 /* States */
 .loading,
 .empty-state {
